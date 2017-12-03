@@ -157,8 +157,8 @@ pipeline {
                 }
             }
         }
-//        stage ('check') {
-//            parallel {
+        stage ('check') {
+            parallel {
                 stage ('check with DRAFT') {
                     when { expression { return ( params.DO_BUILD_WITH_DRAFT_API && params.DO_TEST_CHECK ) } }
                     steps {
@@ -324,8 +324,8 @@ pipeline {
                       }
                     }
                 }
-//            }
-//        }
+            }
+        }
         stage ('deploy if appropriate') {
             steps {
                 script {
