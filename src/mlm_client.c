@@ -873,6 +873,25 @@ mlm_services_api_test (bool verbose)
     printf ("OK\n");
 }
 
+static void
+s_get_server_port (zactor_t *server, char *endpoint)
+{
+    char *command, *port;
+
+    int rc = zstr_sendx (server, "PORT", NULL);
+    assert (rc == 0);
+
+    rc = zstr_recvx (server, &command, &port, NULL);
+    assert (rc == 2);
+    assert (strlen (command) == 4);
+    assert (streq (command, "PORT"));
+    assert (strlen (port) > 0 && strlen (port) < 6);
+    assert (!streq (port, "-1"));
+    sprintf (endpoint, "tcp://127.0.0.1:%s", port);
+
+    zstr_free (&command);
+    zstr_free (&port);
+}
 
 void
 mlm_client_test (bool verbose)
@@ -911,6 +930,9 @@ mlm_client_test (bool verbose)
     }
     rc = zstr_sendx (server, "LOAD", "src/mlm_client.cfg", NULL);
     assert (rc == 0);
+
+    char endpoint [255];
+    s_get_server_port (server, endpoint);
 
     //  Install authenticator to test PLAIN access
     zactor_t *auth = zactor_new (zauth, NULL);
@@ -957,6 +979,7 @@ mlm_client_test (bool verbose)
     }
     rc = zstr_sendx (server, "LOAD", "src/mlm_client.cfg", NULL);
     assert (rc == 0);
+    s_get_server_port (server, endpoint);
 
     client = mlm_client_new ();
     assert (client);
@@ -977,6 +1000,7 @@ mlm_client_test (bool verbose)
     }
     rc = zstr_sendx (server, "LOAD", "src/mlm_client.cfg", NULL);
     assert (rc == 0);
+    s_get_server_port (server, endpoint);
     rc = mlm_client_set_producer (client, "new_stream");
     assert ( rc == -1 ); // the  method set producer is called too fast,
     // so, the client didn't manage to establish a new connection with
@@ -1003,6 +1027,7 @@ mlm_client_test (bool verbose)
     }
     rc = zstr_sendx (server, "LOAD", "src/mlm_client.cfg", NULL);
     assert (rc == 0);
+    s_get_server_port (server, endpoint);
 
     client = mlm_client_new ();
     assert (client);
@@ -1025,6 +1050,7 @@ mlm_client_test (bool verbose)
     }
     rc = zstr_sendx (server, "LOAD", "src/mlm_client.cfg", NULL);
     assert (rc == 0);
+    s_get_server_port (server, endpoint);
     zclock_sleep (5000); // wait a bit
     // after a while we are connected again
     assert (mlm_client_connected (client) == true);
@@ -1046,6 +1072,7 @@ mlm_client_test (bool verbose)
     }
     rc = zstr_sendx (server, "LOAD", "src/mlm_client.cfg", NULL);
     assert (rc == 0);
+    s_get_server_port (server, endpoint);
 
     //  Test stream pattern
     mlm_client_t *writer = mlm_client_new ();
