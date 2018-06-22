@@ -700,7 +700,7 @@ signal_operation_failed (client_t *self)
 static void
 signal_command_invalid (client_t *self)
 {
-    zsys_info ("client address='%s' - invalid command", self->address);
+    zsys_info ("client address='%s' - invalid command '%s'", self->address, mlm_proto_command(self->message));
     mlm_proto_set_status_code (self->message, MLM_PROTO_COMMAND_INVALID);
 }
 
