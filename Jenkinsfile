@@ -1,12 +1,12 @@
 /* Malamute jenkinsfile. Note that the (old) project's selftest uses fixed
  * port numbers, so several checks done in parallel are often in conflict.
  * This file is amended to do sequential tests.
- * It also uses the images with libzmq4-dev (which were spawned for the 1.3
+ * It also uses the images with libzmq4-dev (which were spawned for the 1.5.0
  * release even on master branch builds, for now).
  */
 
 pipeline {
-    agent { label "devel-image-ipm_1.3-libzmq4-dev && x86_64" }
+    agent { label "devel-image-ipm_1.5.0-libzmq4-dev && x86_64" }
     parameters {
         // Use DEFAULT_DEPLOY_BRANCH_PATTERN and DEFAULT_DEPLOY_JOB_NAME if
         // defined in this jenkins setup -- in Jenkins Management Web-GUI
