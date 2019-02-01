@@ -344,9 +344,9 @@ AC_C_VOLATILE
 AC_C_BIGENDIAN
 
 # These options are GNU compiler specific.
-if test "x$GCC" = "xyes"; then
-    CPPFLAGS="-pedantic -Werror -Wall -Wc++-compat ${CPPFLAGS}"
-fi
+#if test "x$GCC" = "xyes"; then
+#    CPPFLAGS="-pedantic -Werror -Wall -Wc++-compat ${CPPFLAGS}"
+#fi
 
 AM_CONDITIONAL(ENABLE_SHARED, test "x$enable_shared" = "xyes")
 AM_CONDITIONAL(ON_MINGW, test "x$malamute_on_mingw32" = "xyes")
