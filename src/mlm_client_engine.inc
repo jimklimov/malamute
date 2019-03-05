@@ -1723,8 +1723,11 @@ int
 mlm_client_set_consumer (mlm_client_t *self, const char *stream, const char *pattern)
 {
     assert (self);
-
-    zsock_send (self->actor, "sss", "SET CONSUMER", stream, pattern);
+    // https://github.com/zeromq/malamute/issues/217
+    // problem  : if pattern "*" is used, the related stream is broken and mlm broker starting overcosumming 100% CPU forever
+    // solution : replace "*" by ".*" to avoid the issue
+    const char *_pattern = (streq(pattern,"*")?".*": pattern);
+    zsock_send (self->actor, "sss", "SET CONSUMER", stream, _pattern);
     if (s_accept_reply (self, "SUCCESS", "FAILURE", NULL))
         return -1;              //  Interrupted or timed-out
     return self->status;
