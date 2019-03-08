@@ -1728,7 +1728,7 @@ mlm_client_set_consumer (mlm_client_t *self, const char *stream, const char *pat
     //            mlm broker will start overcosumming 100% CPU forever
     if (streq(pattern,"*"))
         return -1;
-    zsock_send (self->actor, "sss", "SET CONSUMER", stream, _pattern);
+    zsock_send (self->actor, "sss", "SET CONSUMER", stream, pattern);
     if (s_accept_reply (self, "SUCCESS", "FAILURE", NULL))
         return -1;              //  Interrupted or timed-out
     return self->status;
