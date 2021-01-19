@@ -71,7 +71,6 @@ Architecture: any
 Build-Depends: libzmq3-dev, libczmq-dev
 Depends: ${misc:Depends},
          libzmq3-dev,
-         libczmq1,
          libmlm1 (= ${binary:Version})
 Description: All the enterprise messaging patterns in one box (development files)
  .
