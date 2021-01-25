@@ -18,7 +18,8 @@ Build-Depends: debhelper (>= 9),
  libczmq-dev,
  pkg-config,
  systemd,
- python (>= 2.6.6-3~) | python2, dh-python,
+ python | python2,
+ dh-python,
  dh-systemd
 Package-List:
  libmlm1 deb libs optional arch=any

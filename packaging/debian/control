@@ -25,6 +25,7 @@ Build-Depends: debhelper (>= 9),
     libczmq-dev,
     pkg-config,
     systemd,
+    python | python2,
     dh-python,
     dh-systemd
 
